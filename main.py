@@ -1,7 +1,6 @@
 import json
 
 
-
 print("Bienvenue dans la ToDoList")
 
 choix = 0
@@ -31,11 +30,57 @@ while choix != 5:
   
 
 
-    if choix == 3:
+    elif choix == 2:
+        to_delete = input("Entrez l'élément à retirer : ")
+
         with open("liste.json", "r") as f:
             contenu = json.load(f)
-            for index, element in enumerate(contenu):
-                print(f"{index + 1}. {element}")
+            if to_delete.lower() in contenu:
+                contenu.remove(to_delete)
+                print("votre élément à été supprimé avec succès")
+            else:
+                print("votre élément n'existe pas")
+
+        with open("liste.json", "w") as f:
+            json.dump(contenu, f)
+
+
+
+
+    elif choix == 3:
+        with open("liste.json", "r") as f:
+            contenu = json.load(f)
+            
+            if not contenu:
+                print("Votre liste est vide.")
+            else:
+                for index, element in enumerate(contenu):
+                    print(f"{index + 1}. {element}")
+
+
+    
+    elif choix == 4:
+        confirm = int(input("Etes-vous sûr de vider la liste ? 1. Oui / 2. Non : "))
+        if confirm == 1:
+            with open("liste.json", "r") as f:
+                contenu = json.load(f)
+
+                if not contenu:
+                    print("Votre liste est déjà vide.")
+                else:    
+                    contenu.clear()
+            
+            with open("liste.json", "w") as f:
+                json.dump(contenu, f)
+        
+    elif choix == 5:
+        print("Vous avez quitté le programme")
+        break
+
+    else:
+        print("Veuillez entrer un choix entre 1 et 5.")
+            
+        
 
 
     
